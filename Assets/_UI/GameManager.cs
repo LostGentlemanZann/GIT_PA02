@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +12,12 @@ public class GameManager : MonoBehaviour
     public static int Lives = 3;
     public static int Score = 0;
 
+    public GameObject GameOverUI;
+
+    void Awake() 
+    {
+        GameOverUI.SetActive(false);
+    }
     void Start()
     {
         Lives = 3;
@@ -21,6 +28,12 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        if (Lives == 0) 
+        {
+            Time.timeScale = 0;
+            GameOverUI.SetActive(true);
+        }
+
         if(CurrentState == GameState.GameIdle && Input.GetKeyDown(KeyCode.Return))
         {            
             CurrentState = GameState.GameStart;
@@ -31,6 +44,6 @@ public class GameManager : MonoBehaviour
         else if(CurrentState == GameState.GameOver && Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene(0);
-        }
+        }        
     }
 }

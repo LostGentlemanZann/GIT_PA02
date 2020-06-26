@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     private float moveSpeed = 0.05f;
 
+    public GameObject explosion;
+
     void Start()
     {
         thisController = GetComponent<CharacterController>();
@@ -52,6 +54,19 @@ public class Player : MonoBehaviour
 
         thisController.Move(MoveDirection);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -1.5f, 1.5f), transform.position.y, transform.position.z);
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Obstacles")
+        {
+            print("collide");
+
+            GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+            Destroy(other.gameObject);
+            Destroy(expl, 1);
+            GameManager.Lives -= 1;
+
+        }
     }
 
 }

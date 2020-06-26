@@ -21,5 +21,5 @@ public class Obstacles : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+    }    
 }
